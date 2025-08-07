@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CalculatorHeader extends StatelessWidget {
-  const CalculatorHeader({Key? key}) : super(key: key);
+  const CalculatorHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

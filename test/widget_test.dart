@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:dartz/dartz.dart';
+import 'package:string_calculator_kata/features/calculator/domain/entities/calculation_results.dart';
 import 'package:string_calculator_kata/features/calculator/domain/usecases/calculate_sum.dart';
 import 'package:string_calculator_kata/features/calculator/presentation/bloc/calculator_bloc.dart';
 import 'package:string_calculator_kata/features/calculator/presentation/pages/calculator_page.dart';
@@ -27,6 +30,13 @@ void main() {
 
   group('CalculatorPage Widget Tests', () {
     testWidgets('should display app title', (WidgetTester tester) async {
+      // Set up default mock behavior
+      when(mockCalculateSum(any)).thenAnswer(
+        (_) async => Right(
+          CalculationResult(sum: 0, input: '', timestamp: DateTime.now()),
+        ),
+      );
+
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.text('String Calculator TDD Kata'), findsOneWidget);
@@ -35,6 +45,13 @@ void main() {
     testWidgets('should have input field and buttons', (
       WidgetTester tester,
     ) async {
+      // Set up default mock behavior
+      when(mockCalculateSum(any)).thenAnswer(
+        (_) async => Right(
+          CalculationResult(sum: 0, input: '', timestamp: DateTime.now()),
+        ),
+      );
+
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(TextField), findsOneWidget);
@@ -43,6 +60,13 @@ void main() {
     });
 
     testWidgets('should display examples section', (WidgetTester tester) async {
+      // Set up default mock behavior
+      when(mockCalculateSum(any)).thenAnswer(
+        (_) async => Right(
+          CalculationResult(sum: 0, input: '', timestamp: DateTime.now()),
+        ),
+      );
+
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.text('Examples:'), findsOneWidget);
@@ -52,6 +76,13 @@ void main() {
     });
 
     testWidgets('should display header section', (WidgetTester tester) async {
+      // Set up default mock behavior
+      when(mockCalculateSum(any)).thenAnswer(
+        (_) async => Right(
+          CalculationResult(sum: 0, input: '', timestamp: DateTime.now()),
+        ),
+      );
+
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.text('String Calculator'), findsOneWidget);
@@ -64,18 +95,43 @@ void main() {
     testWidgets('should show loading indicator when calculating', (
       WidgetTester tester,
     ) async {
+      // Set up mock to return a delayed result so we can see the loading state
+      when(mockCalculateSum(any)).thenAnswer((_) async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        return Right(
+          CalculationResult(sum: 6, input: '1,2,3', timestamp: DateTime.now()),
+        );
+      });
+
       await tester.pumpWidget(createWidgetUnderTest());
+
+      // Enter some text first
+      await tester.enterText(find.byType(TextField), '1,2,3');
 
       // Tap calculate button (this will trigger loading state in the bloc)
       await tester.tap(find.text('Calculate'));
-      await tester.pump();
+      await tester.pump(); // Trigger the event
 
+      // Check for loading indicator
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+      // Wait for the calculation to complete
+      await tester.pumpAndSettle();
+
+      // Loading indicator should be gone
+      expect(find.byType(CircularProgressIndicator), findsNothing);
     });
 
     testWidgets('should clear text field when clear button is pressed', (
       WidgetTester tester,
     ) async {
+      // Set up default mock behavior
+      when(mockCalculateSum(any)).thenAnswer(
+        (_) async => Right(
+          CalculationResult(sum: 0, input: '', timestamp: DateTime.now()),
+        ),
+      );
+
       await tester.pumpWidget(createWidgetUnderTest());
 
       // Enter some text
@@ -94,6 +150,13 @@ void main() {
     testWidgets('should have proper form elements', (
       WidgetTester tester,
     ) async {
+      // Set up default mock behavior
+      when(mockCalculateSum(any)).thenAnswer(
+        (_) async => Right(
+          CalculationResult(sum: 0, input: '', timestamp: DateTime.now()),
+        ),
+      );
+
       await tester.pumpWidget(createWidgetUnderTest());
 
       expect(find.text('Numbers'), findsOneWidget);

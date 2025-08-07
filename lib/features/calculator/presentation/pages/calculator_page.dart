@@ -5,7 +5,7 @@ import 'package:string_calculator_kata/features/calculator/presentation/widgets/
 import 'package:string_calculator_kata/features/calculator/presentation/widgets/calculator_result.dart';
 
 class CalculatorPage extends StatelessWidget {
-  const CalculatorPage({Key? key}) : super(key: key);
+  const CalculatorPage({super.key});
 
   @override
   Widget build(BuildContext context) {

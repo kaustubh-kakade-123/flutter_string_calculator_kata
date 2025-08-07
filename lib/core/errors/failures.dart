@@ -32,3 +32,4 @@ class CalculationFailure extends Failure {
   @override
   List<Object> get props => [message];
 }
+

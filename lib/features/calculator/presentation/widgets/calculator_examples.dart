@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CalculatorExamples extends StatelessWidget {
-  const CalculatorExamples({Key? key}) : super(key: key);
+  const CalculatorExamples({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:string_calculator_kata/core/errors/failures.dart';
@@ -52,17 +50,17 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   }
 
   String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ValidationFailure _:
-        return (failure as ValidationFailure).message;
-      case CalculationFailure _:
-        return (failure as CalculationFailure).message;
-      case ServerFailure _:
-        return SERVER_FAILURE_MESSAGE;
-      case CacheFailure _:
-        return CACHE_FAILURE_MESSAGE;
-      default:
-        return 'Unexpected Error';
+    // Use proper type checking instead of runtimeType with switch
+    if (failure is ValidationFailure) {
+      return failure.message;
+    } else if (failure is CalculationFailure) {
+      return failure.message;
+    } else if (failure is ServerFailure) {
+      return SERVER_FAILURE_MESSAGE;
+    } else if (failure is CacheFailure) {
+      return CACHE_FAILURE_MESSAGE;
+    } else {
+      return 'Unexpected Error';
     }
   }
 }

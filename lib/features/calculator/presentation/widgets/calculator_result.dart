@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/calculator_bloc.dart';
 
 class CalculatorResult extends StatelessWidget {
-  const CalculatorResult({Key? key}) : super(key: key);
+  const CalculatorResult({super.key});
 
   @override
   Widget build(BuildContext context) {

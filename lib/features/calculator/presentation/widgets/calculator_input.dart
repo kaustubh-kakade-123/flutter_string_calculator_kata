@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/calculator_bloc.dart';
 
 class CalculatorInput extends StatefulWidget {
-  const CalculatorInput({Key? key}) : super(key: key);
+  const CalculatorInput({super.key});
 
   @override
   State<CalculatorInput> createState() => _CalculatorInputState();
